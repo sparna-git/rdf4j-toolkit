@@ -59,7 +59,7 @@ public class Perform {
 	 * 
 	 *  <code>TupleQueryResult result = Perform.on(connection).selectResult(myQuery)</code>
 	 * 
-	 * @param repository The repository on which to execute the queries
+	 * @param connection The repository connection on which to execute the queries
 	 * @return a new instance of Perform
 	 */
 	public static Perform on(RepositoryConnection connection) {
@@ -83,11 +83,10 @@ public class Perform {
 	
 	/**
 	 * Convenience method that directly execute a COUNT query, or another query with a single line of result and a single binding,
-	 * and directly returns the results, allowing it to be called in <code>if(Perform.on(repository).count(...) > xxx)</code>
+	 * and directly returns the results, allowing it to be called in {@code if(Perform.on(repository).count(...) > xxx)}
 	 * 
-	 * @param query
+	 * @param query SPARQL operation to execute
 	 * @return
-	 * @throws SparqlPerformException
 	 */
 	public int count(SparqlOperationIfc query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -99,11 +98,8 @@ public class Perform {
 	/**
 	 * Same As count(new SimpleSparqlOperation(query))
 	 * 
-	 * @param query
-	 * @return
-	 * @throws TupleQueryResultHandlerException
-	 * @throws QueryEvaluationException
-	 * @throws RepositoryException
+	 * @param query SPARQL count query
+	 * @return the result of the count query
 	 */
 	public int count(String query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -115,8 +111,7 @@ public class Perform {
 	 * and directly returns the results, allowing it to be called in <code>Value v = Perform.on(repository).read(...)</code>
 	 * 
 	 * @param query
-	 * @return
-	 * @throws SparqlPerformException
+	 * @return value value read from the query
 	 */
 	public Value read(SparqlOperationIfc query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -127,11 +122,8 @@ public class Perform {
 	
 	/**
 	 * Same as read(new SimpleSparqlOperation(query))
-	 * @param query
-	 * @return
-	 * @throws TupleQueryResultHandlerException
-	 * @throws QueryEvaluationException
-	 * @throws RepositoryException
+	 * @param query SPARQL query
+	 * @return value read from the query
 	 */
 	public Value read(String query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -140,11 +132,10 @@ public class Perform {
 	
 	/**
 	 * Convenience method that directly execute a query with a single binding and possibly multiple lines of result,
-	 * and directly returns the results, allowing it to be called in <code>List<Value> v = Perform.on(repository).readList(...)</code>
+	 * and directly returns the results, allowing it to be called in {@code List<Value> v = Perform.on(repository).readList(...)}
 	 * 
-	 * @param query
-	 * @return
-	 * @throws SparqlPerformException
+	 * @param query SPARQL operation to execute
+	 * @return list of values being read
 	 */
 	public List<Value> readList(SparqlOperationIfc query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -155,11 +146,8 @@ public class Perform {
 	
 	/**
 	 * Same as readList(new SimpleSparqlOperation(query))
-	 * @param query
-	 * @return
-	 * @throws TupleQueryResultHandlerException
-	 * @throws QueryEvaluationException
-	 * @throws RepositoryException
+	 * @param query SPARQL query to execute
+	 * @return the list of values read in the result
 	 */
 	public List<Value> readList(String query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -168,11 +156,10 @@ public class Perform {
 	
 	/**
 	 * Convenience method that directly execute a query with a single binding and possibly multiple lines of result,
-	 * and directly returns the results as a String List, allowing it to be called in <code>List<String> v = Perform.on(repository).readStringList(...)</code>
+	 * and directly returns the results as a String List, allowing it to be called in {@code List<String> v = Perform.on(repository).readStringList(...)}
 	 * 
-	 * @param query
+	 * @param query the SPARQL operation to execute
 	 * @return
-	 * @throws SparqlPerformException
 	 */
 	public List<String> readStringList(SparqlOperationIfc query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -184,11 +171,8 @@ public class Perform {
 	/**
 	 * Same as readStringList(new SimpleSparqlOperation(query))
 	 * 
-	 * @param query
-	 * @return
-	 * @throws TupleQueryResultHandlerException
-	 * @throws QueryEvaluationException
-	 * @throws RepositoryException
+	 * @param query SPARQL query to execute
+	 * @return list of String read from the binding set
 	 */
 	public List<String> readStringList(String query) 
 	throws TupleQueryResultHandlerException, QueryEvaluationException, RepositoryException {
@@ -292,8 +276,7 @@ public class Perform {
 	/**
 	 * Executes the update returned by the helper. Nothing is returned from the execution.
 	 * 
-	 * @param helper
-	 * @throws SparqlPerformException
+	 * @param updateOperation SPARQL update operation to execute
 	 */
 	public void update(SparqlOperationIfc updateOperation) 
 	throws RepositoryException, UpdateExecutionException {
@@ -353,7 +336,7 @@ public class Perform {
 	 * Sets whether the queries executed will include the inferred statements, if nothing is set at the helper level.
 	 * If something is set at the helper level, this value on the executer will be ignored. Defaults to true. 
 	 * 
-	 * @param includeInferred
+	 * @param includeInferred whether or not to include inferred triples in results
 	 */
 	public void setIncludeInferred(boolean includeInferred) {
 		this.includeInferred = includeInferred;

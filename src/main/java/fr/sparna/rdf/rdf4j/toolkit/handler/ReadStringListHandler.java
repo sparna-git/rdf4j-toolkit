@@ -11,7 +11,7 @@ import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
 
 /**
  * Reads a query result consisting of a single value (Resource or Literal) possibly with multiple lines in the result set,
- * and keep the result in a List<String>, calling the stringValue() method on each Value.
+ * and keep the result in a {@code List<String>}, calling the stringValue() method on each Value.
  * 
  * @author Thomas Francart
  */
@@ -48,7 +48,7 @@ public class ReadStringListHandler extends AbstractTupleQueryResultHandler imple
 	/**
 	 * Returns the result list from this query
 	 * 
-	 * @return
+	 * @return the list of string result values
 	 */
 	public List<String> getResult() {
 		return result;

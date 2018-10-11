@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,7 +16,7 @@ public final class SimpleQueryReaderFactory {
 
 	
 	/**
-	 * Turns a List<String> containing SPARQL queries into a List<SimpleQueryReader>
+	 * Turns a {@code List<String>} containing SPARQL queries into a {@code List<SimpleQueryReader>}
 	 * 
 	 * @param strings
 	 * 
@@ -37,7 +36,7 @@ public final class SimpleQueryReaderFactory {
 	
 	
 	/**
-	 * Turns a directory containing files expressing SPARQL queries into a List<SimpleQueryReader>
+	 * Turns a directory containing files expressing SPARQL queries into a {@code List<SimpleQueryReader>}
 	 * 
 	 * @param directory		The directory to read from, or a file for a single query
 	 * 
@@ -75,7 +74,7 @@ public final class SimpleQueryReaderFactory {
 	}
 	
 	/**
-	 * Reads the provided resources on the classpath and turn them into a List<SimpleQueryReader>
+	 * Reads the provided resources on the classpath and turn them into a {@code List<SimpleQueryReader>}
 	 * 
 	 * @param resources		The list of resources to read from
 	 * 
@@ -94,7 +93,7 @@ public final class SimpleQueryReaderFactory {
 	}
 	
 	/**
-	 * Reads the provided URLs and turn them into a List<SimpleQueryReader>
+	 * Reads the provided URLs and turn them into a {@code List<SimpleQueryReader>}
 	 * 
 	 * @param urls		The list of URLs to read from
 	 * 

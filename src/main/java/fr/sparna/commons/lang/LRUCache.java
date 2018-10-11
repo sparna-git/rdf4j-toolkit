@@ -9,12 +9,12 @@ import java.util.Map;
  * Creates an LRU ("least recently used" / FIFO) cache with a maximum number of entries.
  * This needs to be wrapped with a Collections.synchronizedMap :
  * 
- * <code>
+ * <pre>{@code
 	Map<String, String> example = Collections.synchronizedMap(new LRUCache<String, String>(CACHE_SIZE));
- * </code>
+ * }</pre>
  * 
  * 
- * @see http://stackoverflow.com/questions/221525/how-would-you-implement-an-lru-cache-in-java-6
+ * see http://stackoverflow.com/questions/221525/how-would-you-implement-an-lru-cache-in-java-6
  * @author Thomas Francart
  *
  * @param <A>

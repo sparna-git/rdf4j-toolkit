@@ -26,9 +26,9 @@ public class LoadFromStream extends AbstractLoadOperation implements Consumer<Re
 	/**
 	 * Specifies the default namespace for the data to be read. By default it is RDF.NAMESPACE.
 	 * 
-	 * @param stream
-	 * @param format
-	 * @param defaultNamespace
+	 * @param stream stream to read from
+	 * @param format expected RDF format in the stream
+	 * @param defaultNamespace default namespace to use for parsing
 	 */
 	public LoadFromStream(InputStream stream, RDFFormat format, String defaultNamespace) {
 		super();
@@ -40,8 +40,8 @@ public class LoadFromStream extends AbstractLoadOperation implements Consumer<Re
 	/**
 	 * Loads from the given stream using the given RDF format, using RDF.NAMESPACE as the default namespace.
 	 * 
-	 * @param stream
-	 * @param format
+	 * @param stream stream to read from
+	 * @param format expected RDF format in the stream
 	 */
 	public LoadFromStream(InputStream stream, RDFFormat format) {
 		this(stream, format, RDF.NAMESPACE);
@@ -50,8 +50,8 @@ public class LoadFromStream extends AbstractLoadOperation implements Consumer<Re
 	/**
 	 * Loads the given classpath resource relative the given owner, using the default RDF.NAMESPACE as the namespace
 	 * 
-	 * @param owner
-	 * @param resource
+	 * @param owner owner of the resource
+	 * @param resource path to the resource to load
 	 */
 	public LoadFromStream(Object owner, String resource) {
 		this(

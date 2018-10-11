@@ -84,7 +84,7 @@ public class CsvHandler extends AbstractTupleQueryResultHandler implements Tuple
 	 * Sets whether values should be surrounded by quotes (and quotes in value are doubled to be escaped).
 	 * Defaults to true.
 	 * 
-	 * @param addQuotes
+	 * @param addQuotes whether or not to quote the values
 	 */
 	public void setAddQuotes(boolean addQuotes) {
 		this.addQuotes = addQuotes;
@@ -98,7 +98,7 @@ public class CsvHandler extends AbstractTupleQueryResultHandler implements Tuple
 	 * Sets whether the first line should contain the variable names as a header.
 	 * Defaults to true.
 	 * 
-	 * @param addHeader
+	 * @param addHeader whether or not to add header to output CSV
 	 */
 	public void setAddHeader(boolean addHeader) {
 		this.addHeader = addHeader;

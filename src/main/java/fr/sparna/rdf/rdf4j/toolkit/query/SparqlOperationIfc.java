@@ -28,7 +28,7 @@ public interface SparqlOperationIfc {
 	
 	/**
 	 * Tells if the sparql query should be executed by including the inferred statements or not.
-	 * <p />If this returns null, the default behavior of the {@link Perform} will be used.
+	 * If this returns null, the default behavior of the {@link Perform} will be used.
 	 * 
 	 * @return true if this query will use inferred statements
 	 */

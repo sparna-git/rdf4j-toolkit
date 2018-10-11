@@ -17,7 +17,7 @@ import fr.sparna.rdf.rdf4j.toolkit.repository.init.LoadFromUrl;
 import fr.sparna.rdf.rdf4j.toolkit.util.Namespaces;
 
 /**
- * Supplies a Repository from a source Supplier<Repository>, and a list of Consumer<RepositoryConnection>
+ * Supplies a Repository from a source {@code Supplier<Repository>}, and a list of {@code Consumer<RepositoryConnection>}
  * that will be called to e.g. load data in the repository.
  * 
  * @author Thomas Francart
@@ -34,9 +34,9 @@ public class RepositoryBuilder implements Supplier<Repository> {
 	private List<Consumer<RepositoryConnection>> operations;
 	
 	/**
-	 * Creates a RepositoryBuilder from another Supplier<Repository> and the list of operations that will act on it.
-	 * @param repositorySupplier
-	 * @param initOperations
+	 * Creates a RepositoryBuilder from another {@code Supplier<Repository>} and the list of operations that will act on it.
+	 * @param repositorySupplier supplies to initial repository
+	 * @param initOperations operations to apply to repository
 	 */
 	public RepositoryBuilder(Supplier<Repository> repositorySupplier, List<Consumer<RepositoryConnection>> initOperations) {
 		super();
@@ -47,16 +47,16 @@ public class RepositoryBuilder implements Supplier<Repository> {
 	/**
 	 * Convenience constructor to build with a single operation
 	 * 
-	 * @param repositoryFactory
-	 * @param anOperation
+	 * @param repositoryFactory factory to create the repository from
+	 * @param anOperation the single operation applied on the built repository
 	 */
 	public RepositoryBuilder(Supplier<Repository> repositoryFactory, Consumer<RepositoryConnection> anOperation) {
 		this(repositoryFactory, new ArrayList<Consumer<RepositoryConnection>>(Collections.singletonList(anOperation)));
 	}	
 	
 	/**
-	 * Creates a RepositoryBuilder with a Supplier<Repository> and no init operations.
-	 * @param repositoryFactory
+	 * Creates a RepositoryBuilder with a {@code Supplier<Repository>} and no init operations.
+	 * @param repositoryFactory factory from which to create a Repository object
 	 */
 	public RepositoryBuilder(Supplier<Repository> repositoryFactory) {
 		this(repositoryFactory, (List<Consumer<RepositoryConnection>>)null);
@@ -71,6 +71,8 @@ public class RepositoryBuilder implements Supplier<Repository> {
 	
 	/**
 	 * Creates a RepositoryBuilder with a default LocalMemoryRepositoryFactory and a single operation
+	 * 
+	 * @param operation the single operation applied on the built repository
 	 */
 	public RepositoryBuilder(Consumer<RepositoryConnection> operation) {
 		this(new LocalMemoryRepositorySupplier(), operation);
@@ -79,9 +81,8 @@ public class RepositoryBuilder implements Supplier<Repository> {
 	/**
 	 * Attemps to load the given URL in a local memory repository.
 	 *  
-	 * @param url
-	 * @return
-	 * @throws RepositoryFactoryException
+	 * @param url URL to read from
+	 * @return repository loaded with URL
 	 */
 	public static Repository fromURL(URL url) {
 		RepositoryBuilder builder = new RepositoryBuilder(
@@ -97,8 +98,7 @@ public class RepositoryBuilder implements Supplier<Repository> {
 	 * This relies on the LoadFromString operation.
 	 * 
 	 * @param rdf a String containing the rdf data to load
-	 * @return
-	 * @throws RepositoryFactoryException
+	 * @return repository loaded from RDF String
 	 */
 	public static Repository fromRdf(String rdf) {
 		RepositoryBuilder builder = new RepositoryBuilder(new LocalMemoryRepositorySupplier(), new LoadFromString(rdf));

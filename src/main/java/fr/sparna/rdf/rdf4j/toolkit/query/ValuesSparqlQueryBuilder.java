@@ -19,9 +19,9 @@ public class ValuesSparqlQueryBuilder implements Supplier<String> {
 	/**
 	 * Wraps the given builder to add VALUES to the given variable
 	 * 
-	 * @param builder
-	 * @param var
-	 * @param values
+	 * @param builder supplier of the SPARQL query
+	 * @param var variable to add VALUES for
+	 * @param values list of values to insert
 	 */
 	public ValuesSparqlQueryBuilder(
 			Supplier<String> builder,

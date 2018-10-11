@@ -44,7 +44,7 @@ public class ReadValueListHandler extends AbstractTupleQueryResultHandler implem
 	/**
 	 * Returns the result list from this query
 	 * 
-	 * @return
+	 * @return the lis of result values
 	 */
 	public List<Value> getResult() {
 		return result;

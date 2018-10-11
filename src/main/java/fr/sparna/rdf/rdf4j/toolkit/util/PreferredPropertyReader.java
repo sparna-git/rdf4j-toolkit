@@ -68,7 +68,7 @@ public class PreferredPropertyReader {
 	}
 	
 	/**
-	 * @deprecated use constructor with List<String> for fallbackLanguages
+	 * @deprecated use constructor with {@code List<String>} for fallbackLanguages
 	 */
 	public PreferredPropertyReader(
 			RepositoryConnection connection,

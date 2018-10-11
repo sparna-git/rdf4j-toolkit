@@ -5,7 +5,7 @@ import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.helpers.AbstractRDFHandler;
 
 /**
- * Associates the path of a query in a resource file, an optional Collection<Binding>, and this (abstract) RDFHandler.
+ * Associates the path of a query in a resource file, an optional {@code Collection<Binding>}, and this (abstract) RDFHandler.
  * Subclasses must implement <code>getResourcePath()</code> to provide the path to the resource to read the SPARQL query from,
  * and the methods of RDFHandler (typically <code>handleStatement</code>).
  * 
@@ -41,7 +41,7 @@ public abstract class ResourceGraphQueryHelper extends AbstractRDFHandler implem
 	 * A helper method to set the bindings on this instance that returns this instance, that allows
 	 * to create a new instance and pass it bindings in a single statement.
 	 * 
-	 * @param bindings	The bindings to set
+	 * @param bindingSet	The bindings to set
 	 * @return this
 	 */
 	public ResourceGraphQueryHelper withBindings(BindingSet bindingSet) {

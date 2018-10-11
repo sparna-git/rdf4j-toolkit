@@ -46,7 +46,7 @@ public class ReadSingleValueHandler extends AbstractTupleQueryResultHandler impl
 	/**
 	 * Returns the single result from this query
 	 * 
-	 * @return
+	 * @return the single value for this result
 	 */
 	public Value getResult() {
 		return result;

@@ -51,8 +51,8 @@ public class KeyValueReader<Key, Value> {
 	 * Reads the (potentially multiple) values associated to the given key. To read a single value, use readUnique.
 	 * 
 	 * @param key	The key to read the values for.
+	 * @param connection connection to read from
 	 * @return
-	 * @throws SparqlPerformException
 	 */
 	public List<Value> read(Key key, RepositoryConnection connection) {
 		// initialize at first call
@@ -87,8 +87,8 @@ public class KeyValueReader<Key, Value> {
 	 * returns the first one in the list.
 	 * 
 	 * @param key	The key to read the single value for.
+	 * @param connection connection to read from
 	 * @return
-	 * @throws SparqlPerformException
 	 */
 	public Value readUnique(Key key, RepositoryConnection connection) {
 		List<Value> values = this.read(key, connection);
@@ -101,7 +101,8 @@ public class KeyValueReader<Key, Value> {
 	
 	/**
 	 * Creates the cache and pre-loads it if needed
-	 * @throws SparqlPerformException
+	 * 
+	 * @param connection connection to read from
 	 */
 	private void init(RepositoryConnection connection) {
 		this.cache = new HashMap<Key, List<Value>>();

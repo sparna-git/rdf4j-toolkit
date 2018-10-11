@@ -5,7 +5,7 @@ import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResultHandler;
 
 /**
- * Associates the path of a query in a resource file, an optional Collection<Binding>, and this (abstract) TupleQueryResultHandler.
+ * Associates the path of a query in a resource file, an optional {@code Collection<Binding>}, and this (abstract) TupleQueryResultHandler.
  * Subclasses must implement <code>getResourcePath()</code> to provide the path to the resource to read the SPARQL query from,
  * and the methods of TupleQueryResultHandler (typically <code>handleSolution</code>).
  * 

@@ -25,7 +25,6 @@ import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFWriterFactory;
 import org.eclipse.rdf4j.rio.RDFWriterRegistry;
 import org.eclipse.rdf4j.rio.Rio;
-import org.eclipse.rdf4j.rio.helpers.BufferedGroupingRDFHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +68,7 @@ public class RepositoryWriter {
 	
 	/**
 	 * Construct a RepositoryWriter that will write the given repository connection.
-	 * @param repository
+	 * @param connection
 	 */
 	public RepositoryWriter(
 			RepositoryConnection connection
@@ -82,7 +81,7 @@ public class RepositoryWriter {
 	 * Construct a RepositoryWriter that will write the resul of the given SPARQL query
 	 * on the given repository
 	 * 
-	 * @param repository
+	 * @param connection
 	 * @param sparql
 	 */
 	public RepositoryWriter(
@@ -95,17 +94,11 @@ public class RepositoryWriter {
 	}
 	
 	/**
-	 * Shortcut method that writes the content of a repository to the file denoted by the given path.
+	 * Shortcut method that writes the content of a repository connection to the file denoted by the given path.
 	 * Internally calls the <code>writeToFile(targetFile)</code> method.
 	 * 
 	 * @param targetFile	Path of the file to write to
-	 * @param repository	Repository to write
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
+	 * @param connection	Connection to write
 	 */
 	public static void writeToFile(String targetFile, RepositoryConnection connection)
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -114,17 +107,11 @@ public class RepositoryWriter {
 	}
 	
 	/**
-	 * Shortcut method that writes the content of a repository to the given file.
+	 * Shortcut method that writes the content of a repository connection to the given file.
 	 * Internally calls the <code>writeToFile(targetFile)</code> method.
 	 * 
 	 * @param targetFile	The file to write to
-	 * @param repository	Repository to write
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
+	 * @param connection	Connection to write
 	 */
 	public static void writeToFile(File targetFile, RepositoryConnection connection)
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -133,18 +120,12 @@ public class RepositoryWriter {
 	}
 
 	/**
-	 * Shortcut method that writes the content of the given namedGraphs of a repository to the file
+	 * Shortcut method that writes the content of the given namedGraphs of a repository connection to the file
 	 * denoted by the given path. Internally calls the <code>writeToFile</code> method.
 	 * 
 	 * @param targetFile	Path of the file to write to
-	 * @param repository	Repository to write
+	 * @param connection	Repository connection to write
 	 * @param namedGraphs	List of named graphs URI to write
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
 	 */
 	public static void writeToFile(String targetFile, RepositoryConnection connection, List<IRI> namedGraphs)
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -154,18 +135,12 @@ public class RepositoryWriter {
 	}	
 	
 	/**
-	 * Shortcut method that writes the content of the given namedGraph of a repository to the file
+	 * Shortcut method that writes the content of the given namedGraph of a repository connection to the file
 	 * denoted by the given path. Internally calls the <code>writeToFile</code> method.
 	 * 
 	 * @param targetFile	Path of the file to write to
-	 * @param repository	Repository to write
+	 * @param connection	Repository connection to write
 	 * @param namedGraph	URI of the named graph to write
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
 	 */
 	public static void writeToFile(String targetFile, RepositoryConnection connection, IRI namedGraph)
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -176,12 +151,6 @@ public class RepositoryWriter {
 	 * Write the repository to the file with the given path. Delegates the call to <code>writeToFile(new File(file))</code>
 	 * 
 	 * @param file	The path of the file to write to
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
 	 */
 	public void writeToFile(String file) 
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -192,13 +161,7 @@ public class RepositoryWriter {
 	 * Write the repository to the file with the given path. The format used for serializing is deduced from
 	 * the file extension. The file is created if it does not exists.
 	 * 
-	 * @param file	The file to write to
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
+	 * @param fout	The file to write to
 	 */
 	public void writeToFile(File fout)
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -227,12 +190,6 @@ public class RepositoryWriter {
 	 *  
 	 * @param format	The Format to use for serialisation
 	 * @return			A String containing the result of the serialization of the repository
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
 	 */
 	public String writeToString(RDFFormat format)
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {
@@ -247,12 +204,6 @@ public class RepositoryWriter {
 	 * 
 	 * @param stream	Stream to write to
 	 * @param format	Format to use for serialisation
-	 * 
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws IOException
-	 * @throws QueryEvaluationException
-	 * @throws RDFHandlerException
 	 */
 	public void writeToStream(OutputStream stream, RDFFormat format) 
 	throws RepositoryException, MalformedQueryException, IOException, QueryEvaluationException, RDFHandlerException {

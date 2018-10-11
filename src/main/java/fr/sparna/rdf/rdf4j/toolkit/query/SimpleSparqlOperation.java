@@ -11,7 +11,7 @@ import org.eclipse.rdf4j.query.Dataset;
 import org.eclipse.rdf4j.repository.sparql.query.SPARQLQueryBindingSet;
 
 /**
- * Concrete implementation of {@link SparqlOperationIfc} that relies on a Supplier<String> to return the SPARQL query.
+ * Concrete implementation of {@link SparqlOperationIfc} that relies on a {@code Supplier<String>} to return the SPARQL query.
  * to return the SPARQL query.
  * 
  * @author Thomas Francart
@@ -31,7 +31,7 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	 * Constructs a SparqlQuery with a SparqlQueryBuilderIfc and the given bindings
 	 * 
 	 * @param supplier The supplier that will return the SPARQL query in <code>getSPARQL</code>
-	 * @param bindings The bindings to inject in the SPARQL query
+	 * @param bindingSet The bindings to inject in the SPARQL query
 	 */
 	public SimpleSparqlOperation(Supplier<String> supplier, BindingSet bindingSet) {
 		super();
@@ -50,10 +50,10 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	
 	/**
 	 * Convenience constructor that takes a String as an input and wraps it in a
-	 * {@link fr.sparna.rdf.sesame.toolkit.query.builder.StringSPARQLQueryBuilder StringSPARQLQueryBuilder}, along with associated bindings
+	 * {@link fr.sparna.rdf.rdf4j.toolkit.query.SimpleQueryReader SimpleQueryReader}, along with associated bindings
 	 * 
 	 * @param sparql a String representing a valid SPARQL query that will be wrapped in
-	 * a {@link fr.sparna.rdf.sesame.toolkit.query.builder.StringSPARQLQueryBuilder StringSPARQLQueryBuilder}
+	 * a {@link fr.sparna.rdf.rdf4j.toolkit.query.SimpleQueryReader SimpleQueryReader}
 	 * @param  bindings The bindings associated to the query
 	 */
 	public SimpleSparqlOperation(String sparql, BindingSet bindings) {
@@ -62,8 +62,8 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	
 	/**
 	 * @deprecated use SimpleSparqlOperation(String, BindingSet) instead.
-	 * @param sparql
-	 * @param bindings
+	 * @param sparql sparql query
+	 * @param bindings bindings
 	 */
 	public SimpleSparqlOperation(String sparql, Collection<Binding> bindings) {
 		this(new SimpleQueryReader(sparql), SimpleSparqlOperation.toBindginSet(bindings));
@@ -71,10 +71,10 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	
 	/**
 	 * Convenience constructor that takes a String as an input and wraps it in a
-	 * {@link fr.sparna.rdf.sesame.toolkit.query.builder.StringSPARQLQueryBuilder StringSPARQLQueryBuilder}
+	 * {@link fr.sparna.rdf.rdf4j.toolkit.query.SimpleQueryReader SimpleQueryReader}
 	 * 
 	 * @param sparql a String representing a valid SPARQL query that will be wrapped in
-	 * a {@link fr.sparna.rdf.sesame.toolkit.query.builder.StringSPARQLQueryBuilder StringSPARQLQueryBuilder}
+	 * a {@link fr.sparna.rdf.rdf4j.toolkit.query.SimpleQueryReader SimpleQueryReader}
 	 */
 	public SimpleSparqlOperation(String sparql) {
 		this(new SimpleQueryReader(sparql));
@@ -84,7 +84,7 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	 * A helper method to set the bindings on this instance that returns this instance, that allows
 	 * to create a new instance and pass it bindings in a single statement, e.g. new SimpleSparqlOperation(myString).withBindings(myBindings);
 	 * 
-	 * @param bindings	The bindings to set
+	 * @param bindingSet	The bindings to set
 	 * @return this
 	 */
 	public SimpleSparqlOperation withBindings(BindingSet bindingSet) {
@@ -109,7 +109,7 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	}
 	
 	/**
-	 * Gets the SPARQL String from the underlying Supplier<String>
+	 * Gets the SPARQL String from the underlying {@code Supplier<String>}
 	 */
 	@Override
 	public String getSPARQL() {
@@ -179,9 +179,9 @@ public class SimpleSparqlOperation implements SparqlOperationIfc {
 	}
 	
 	/**
-	 * Wraps a list of Supplier<String> into a List<SimpleSparqlOperation>.
+	 * Wraps a list of {@code Supplier<String>} into a {@code List<SimpleSparqlOperation>}.
 	 * 
-	 * @param suppliers
+	 * @param suppliers suppliers to read SPARQL queries
 	 * @return
 	 */
 	public static List<SimpleSparqlOperation> fromQueryList(List<? extends Supplier<String>> suppliers) {

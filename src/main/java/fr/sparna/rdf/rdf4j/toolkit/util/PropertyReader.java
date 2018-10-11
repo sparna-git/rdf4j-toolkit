@@ -38,7 +38,7 @@ public class PropertyReader {
 	 * Will read the given property with the given language in the repository, with a additional criteria on the set of subjects for which
 	 * we want to read the property.
 	 * 
-	 * @param repository					The repository to read from
+	 * @param connection					The repository to read from
 	 * @param propertyURI					The property URI to read
 	 * @param additionalPath				An additional path to append to the predicate URI
 	 * @param lang							The language in which we want to read the property (optional, may be null)
@@ -65,7 +65,7 @@ public class PropertyReader {
 	/**
 	 * Will read the given property with the given language in the repository
 	 * 
-	 * @param repository	The repository to read from
+	 * @param connection	The repository to read from
 	 * @param propertyURI	The property URI to read
 	 * @param lang			The language in which to read the property
 	 */
@@ -76,7 +76,7 @@ public class PropertyReader {
 	/**
 	 * Will read the given property with the given language in the repository
 	 * 
-	 * @param repository		The repository to read from
+	 * @param connection		The repository to read from
 	 * @param propertyURI		The property URI to read
 	 * @param additionalPath	An additionnal path to append to the predicate URI
 	 * @param lang				The language in which to read the property
@@ -88,7 +88,7 @@ public class PropertyReader {
 	/**
 	 * Will read the given property in the repository
 	 * 
-	 * @param repository	The repository to read from
+	 * @param connection	The repository to read from
 	 * @param propertyURI	The property URI to read
 	 */
 	public PropertyReader(RepositoryConnection connection, IRI propertyURI) {
@@ -124,7 +124,6 @@ public class PropertyReader {
 	
 	/**
 	 * Creates the cache and pre-loads it if needed
-	 * @throws SparqlPerformException
 	 */
 	private void init() {
 		this.cache = new HashMap<IRI, List<Value>>();

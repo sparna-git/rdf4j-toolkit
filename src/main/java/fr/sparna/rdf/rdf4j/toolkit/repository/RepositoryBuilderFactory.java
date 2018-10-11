@@ -36,10 +36,10 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	
 	/**
 	 * Creates a RepositoryBuilderFactory with a list of Strings that can be file path, directory paths, or URLs, and the
-	 * original Supplier<Repository>.
+	 * original {@code Supplier<Repository>}.
 	 * 
-	 * @param fileOrDirectoryOrURLs
-	 * @param localRepositoryFactory
+	 * @param fileOrDirectoryOrURLs path to file, directory, or URL
+	 * @param localRepositoryFactory supplier of the initial Repository
 	 */
 	public RepositoryBuilderFactory(List<String> fileOrDirectoryOrURLs, Supplier<Repository> localRepositoryFactory) {
 		super();
@@ -53,10 +53,12 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	
 	/**
 	 * Creates a RepositoryBuilder with a single String that can be file path, directory paths, or URLs, and the
-	 * original Supplier<Repository>.
+	 * original {@code Supplier<Repository>}.
 	 * 
-	 * @param fileOrDirectoryOrURL
-	 * @param localRepositoryFactory
+	 * @param fileOrDirectoryOrURL path to file, directory, or URL
+	 * @param localRepositoryFactory supplier of the initial Repository
+	 * 
+	 * @return a RepositoryBuilder ready to load provided resource
 	 */
 	public static RepositoryBuilder fromString(String fileOrDirectoryOrURL, Supplier<Repository> localRepositoryFactory) {
 		return new RepositoryBuilderFactory(Collections.singletonList(fileOrDirectoryOrURL), localRepositoryFactory).get();
@@ -66,7 +68,9 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	 * Creates a RepositoryBuilderFactory with a list of Strings that can be file path, directory paths, or URLs,
 	 * and a default LocalMemoryRepositorySupplier.
 	 * 
-	 * @param fileOrDirectoryOrURLs
+	 * @param fileOrDirectoryOrURLs path to file, directory, or URL
+	 * 
+	 * @return a RepositoryBuilder ready to load provided resources in a local memory repository
 	 */
 	public static RepositoryBuilder fromStringList(List<String> fileOrDirectoryOrURLs) {
 		return new RepositoryBuilderFactory(fileOrDirectoryOrURLs, new LocalMemoryRepositorySupplier()).get();
@@ -76,7 +80,7 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	 * Creates a RepositoryBuilderFactory with a single String that can be file path, directory paths, or URLs, 
 	 * and a default LocalMemoryRepositorySupplier.
 	 * 
-	 * @param fileOrDirectoryOrURL
+	 * @param fileOrDirectoryOrURL path to file, directory, or URL
 	 */
 	public static RepositoryBuilder fromString(String fileOrDirectoryOrURL) {
 		return new RepositoryBuilderFactory(Collections.singletonList(fileOrDirectoryOrURL), new LocalMemoryRepositorySupplier()).get();
@@ -89,7 +93,7 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	 *   <li>A URL if it starts with 'http'. In this case if it ends with a known RDF extension it will first be attempted to be loaded as an RDF file, 
 	 *   otherwise it will be interpreted as the URL of a SPARQL endpoint;
 	 *   </li>
-	 *   <li>A URL if it starts with 'jdbc:virtuoso', in this case a VirtuosoReflectionRepositoryFactory will be used as the source Supplier<Repository></li>
+	 *   <li>A URL if it starts with 'jdbc:virtuoso', in this case a VirtuosoReflectionRepositoryFactory will be used as the source {@code Supplier<Repository>}</li>
 	 *   <li>The path to a file or directory or classpath resource</li>
 	 * </ul>
 	 */
@@ -162,7 +166,7 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	/**
 	 * Test if given URL can be the URL of a SPARQL endpoint, or a URL pointing to a file
 	 * @param url
-	 * @return
+	 * @return true if provided URL does not have a known RDF extension and responds to a ping SPARQL query
 	 */
 	public static boolean isEndpointURL(String url) {
 		// 1. test if a parser is available for that file extension.

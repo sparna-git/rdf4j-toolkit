@@ -15,13 +15,13 @@ import fr.sparna.rdf.rdf4j.toolkit.repository.RepositoryBuilder;
  * Runs another RepositoryOperationIfc in a separate thread. This allows for example to load large quantity of data
  * at startup without impacting the startup time.
  * Usage exemple :
- * <code><pre>
+ * {@code<pre>
  		RepositoryBuilder builder = new RepositoryBuilder(new LocalMemoryRepositoryFactory(FactoryConfiguration.RDFS_WITH_DIRECT_TYPE_AWARE));
 		CountDownLatch latch = new CountDownLatch(1);
 		ThreadedRepositoryOperation tro = new ThreadedRepositoryOperation(new LoadFromFileOrDirectory(args[0]), latch);
 		factory.addOperation(tro);
 		factory.createRepository();
- *	</pre></code>
+ *	</pre>}
  * 
  * @author Thomas Francart
  *
