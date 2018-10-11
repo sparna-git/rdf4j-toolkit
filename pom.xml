@@ -8,11 +8,33 @@
 
     <name>Sparna RDF : RDF4J-toolkit</name>
     <description>Extensions for the RDF4J framework.</description>
+    <url>https://github.com/sparna-git/rdf4j-toolkit</url>
 
-    <organization>
-        <name>Sparna</name>
-        <url>http://www.sparna.fr/</url>
-    </organization>
+	<licenses>
+		<license>
+			<name>GNU General Public License v3.0 or later</name>
+			<url>https://spdx.org/licenses/GPL-3.0-or-later.html</url>
+		</license>
+	</licenses>
+
+    <developers>
+		<developer>
+			<name>Thomas Francart</name>
+			<email>thomas.francart@sparna.fr</email>
+			<organization>Sparna</organization>
+			<organizationUrl>http://www.sparna.fr</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+	  <connection>scm:git:git://github.com/sparna-git/rdf4j-toolkit.git</connection>
+	  <developerConnection>scm:git:ssh://github.com/sparna-git/rdf4j-toolkit.git</developerConnection>
+	  <url>http://github.com/sparna-git/rdf4j-toolkit/tree/master</url>
+	</scm>
+
+	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<repositories>
 	    <!-- points to the local repository containing the Virtuoso dependencies -->
@@ -23,41 +45,43 @@
 	    </repository>
 	</repositories>
 
-    <!-- javadoc and sources are generated and attached only when 'release' profile is active -->
-    <!-- mvn -P release clean install -->
-    <profiles>
-    	<profile>
-      		<id>release</id>
-      		<build>
-			<plugins>
-				<plugin>
-				  <groupId>org.apache.maven.plugins</groupId>
-				  <artifactId>maven-source-plugin</artifactId>
-				  <executions>
-				    <execution>
-				      <id>attach-sources</id>
-				      <goals>
+	<build>
+		<plugins>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-source-plugin</artifactId>
+			  <executions>
+			    <execution>
+			      <id>attach-sources</id>
+			      <goals>
+				<goal>jar</goal>
+			      </goals>
+			    </execution>
+			  </executions>
+			</plugin>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-javadoc-plugin</artifactId>
+			  <executions>
+			    <execution>
+			      <id>attach-javadocs</id>
+			      <goals>
 					<goal>jar</goal>
-				      </goals>
-				    </execution>
-				  </executions>
-				</plugin>
-				<plugin>
-				  <groupId>org.apache.maven.plugins</groupId>
-				  <artifactId>maven-javadoc-plugin</artifactId>
-				  <executions>
-				    <execution>
-				      <id>attach-javadocs</id>
-				      <goals>
-						<goal>jar</goal>
-				      </goals>
-				    </execution>
-				  </executions>
-				</plugin>
-			</plugins>
-		    </build>
-		</profile>
-    </profiles>
+			      </goals>
+			    </execution>
+			  </executions>
+			</plugin>
+		</plugins>
+    </build>
 
     <dependencies>
 
@@ -108,20 +132,7 @@
 			<version>1.1.1</version>
 			<scope>runtime</scope>
 		</dependency> 
-
-    	<dependency>
-            <groupId>com.openlink.virtuoso</groupId>
-            <artifactId>virtjdbc4</artifactId>
-            <version>4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.openlink.virtuoso</groupId>
-            <artifactId>virt_rdf4j</artifactId>
-            <version>2.1.4</version>
-        </dependency>
  
     </dependencies>
-
-
 
 </project>
