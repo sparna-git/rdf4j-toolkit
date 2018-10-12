@@ -4,10 +4,17 @@
 
 	<groupId>fr.sparna.rdf</groupId>
 	<artifactId>rdf-toolkit</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4</version>
 
 	<name>Sparna RDF : rdf-toolkit</name>
 	<description>Command-line utilities to manipulate RDF data</description>
+
+    <parent>
+        <groupId>fr.sparna.rdf</groupId>
+        <artifactId>rdf4j-toolkit-root-pom</artifactId>
+        <version>1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
 	<organization>
 		<name>Sparna</name>
@@ -21,16 +28,6 @@
 
 	<build>
 		<plugins>
-
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
 
 			<!-- Ce plugin ajoute les elements suivants dans le fichier META-INF/MANIFEST.MF 
 				du jar final : Implementation-Title: ${project.artifactId} Implementation-Version: 
@@ -129,7 +126,7 @@
 			    </configuration>
 			  </execution>
 			</executions>
-		      </plugin>
+		  </plugin>
 
 		</plugins>
 	</build>
@@ -139,8 +136,6 @@
 	  <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.7</version>
-        <scope>test</scope>
       </dependency>
 
 		<dependency>
@@ -158,28 +153,13 @@
        <dependency>
                <groupId>org.eclipse.rdf4j</groupId>
                <artifactId>rdf4j-runtime</artifactId>
-               <version>2.0</version>
        </dependency>
 
 		<dependency>
 			<groupId>fr.sparna.rdf</groupId>
 			<artifactId>rdf4j-toolkit</artifactId>
-			<version>0.1</version>
+			<version>0.4-SNAPSHOT</version>
 		</dependency>
-
-		<!--
-		<dependency>
-			<groupId>fr.sparna.rdf.skos</groupId>
-			<artifactId>skos-toolkit</artifactId>
-		</dependency>
-		-->
-
-		<!--
-		<dependency>
-			<groupId>fr.sparna.rdf.skos</groupId>
-			<artifactId>skos-toolkit-solr</artifactId>
-		</dependency>
-		-->
 
 		<!-- for command-line parsing -->
 		<dependency>
