@@ -113,7 +113,9 @@ public class SimpleQueryReader implements Supplier<String> {
         
 		try {
 			// read from the stream
-			this.sparql = IOUtils.toString(src, Charset.defaultCharset());
+			// note we use the method variant with a String and not a Charset to be able to work
+			// with older versions of commons.IO
+			this.sparql = IOUtils.toString(src, Charset.defaultCharset().name());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
