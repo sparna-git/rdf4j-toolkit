@@ -30,7 +30,7 @@ public final class Languages {
 	
 	private Languages() {
 		// load the language data
-		this.repository = RepositoryBuilderFactory.fromString("fr/sparna/rdf/rdf4j/toolkit/languages/lexvo-languages.ttl").get();
+		this.repository = RepositoryBuilderFactory.fromString("/fr/sparna/rdf/rdf4j/toolkit/languages/lexvo-languages.ttl").get();
 	}
 	
 	public static Languages getInstance() {

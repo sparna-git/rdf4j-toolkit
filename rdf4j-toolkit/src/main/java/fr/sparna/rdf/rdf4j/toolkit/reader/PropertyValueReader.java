@@ -60,8 +60,8 @@ public class PropertyValueReader extends KeyValueReader<IRI, Value> {
 			String sparql = "" +
 					"SELECT ?"+KEY_VAR_NAME+" ?"+VALUE_VAR_NAME+""+"\n" +
 					"WHERE {"+"\n" +
-					"	?"+KEY_VAR_NAME+" "+this.path+" ?"+VALUE_VAR_NAME+"\n" +
-					((this.facetProperty != null && this.facetValue != null)?"	?"+KEY_VAR_NAME+" <"+this.facetProperty.stringValue()+"> <"+this.facetValue.stringValue()+">"+"\n":"")+
+					"	?"+KEY_VAR_NAME+" "+this.path+" ?"+VALUE_VAR_NAME+" .\n" +
+					((this.facetProperty != null && this.facetValue != null)?"	?"+KEY_VAR_NAME+" <"+this.facetProperty.stringValue()+"> <"+this.facetValue.stringValue()+">"+" .\n":"")+
 					((this.lang != null)?"   FILTER(langMatches(lang(?"+VALUE_VAR_NAME+"), '"+this.lang+"'))"+"\n":"")+
 					"}"
 			;		
