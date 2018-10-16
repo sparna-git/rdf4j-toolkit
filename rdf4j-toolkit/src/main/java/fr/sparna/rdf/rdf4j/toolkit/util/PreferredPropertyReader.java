@@ -288,7 +288,7 @@ public class PreferredPropertyReader {
 						if(result.containsKey(uri)) {
 							result.get(uri).add(v);
 						} else {
-							result.put((IRI)uri, new ArrayList<Value>());
+							result.put((IRI)uri, new ArrayList<Value>(Collections.singletonList(v)));
 						}
 					}					
 				}
