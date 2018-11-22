@@ -23,7 +23,7 @@
 
 
 	<properties>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.version>4.3.17.RELEASE</spring.version>
 	</properties>
 
 	<build>
@@ -74,7 +74,19 @@
 			    </goals>
 			    <configuration>
 			      <shadedArtifactAttached>true</shadedArtifactAttached>
-			      <shadedClassifierName>onejar</shadedClassifierName>              
+			      <shadedClassifierName>onejar</shadedClassifierName>
+
+					<filters>
+						<filter>
+						  <artifact>*:*</artifact>
+						  <excludes>
+						    <exclude>META-INF/*.SF</exclude>
+						    <exclude>META-INF/*.DSA</exclude>
+						    <exclude>META-INF/*.RSA</exclude>
+						  </excludes>
+						</filter>
+					</filters>
+          
 			      <transformers>
 					<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 						<manifestEntries>
