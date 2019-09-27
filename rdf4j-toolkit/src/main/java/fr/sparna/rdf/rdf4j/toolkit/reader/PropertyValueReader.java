@@ -58,7 +58,7 @@ public class PropertyValueReader extends KeyValueReader<IRI, Value> {
 		public String get() {
 	
 			String sparql = "" +
-					"SELECT ?"+KEY_VAR_NAME+" ?"+VALUE_VAR_NAME+""+"\n" +
+					"SELECT DISTINCT ?"+KEY_VAR_NAME+" ?"+VALUE_VAR_NAME+""+"\n" +
 					"WHERE {"+"\n" +
 					"	?"+KEY_VAR_NAME+" "+this.path+" ?"+VALUE_VAR_NAME+" .\n" +
 					((this.facetProperty != null && this.facetValue != null)?"	?"+KEY_VAR_NAME+" <"+this.facetProperty.stringValue()+"> <"+this.facetValue.stringValue()+">"+" .\n":"")+
