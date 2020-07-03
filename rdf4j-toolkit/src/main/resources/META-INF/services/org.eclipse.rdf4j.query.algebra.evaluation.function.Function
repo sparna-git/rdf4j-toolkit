@@ -1,2 +1,2 @@
-fr.sparna.rdf.sesame.toolkit.functions.LevenshteinDistanceFunction
-fr.sparna.rdf.sesame.toolkit.functions.SplitCamelCaseFunction
+fr.sparna.rdf.rdf4j.toolkit.functions.LevenshteinDistanceFunction
+fr.sparna.rdf.rdf4j.toolkit.functions.SplitCamelCaseFunction

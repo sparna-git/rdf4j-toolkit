@@ -4,7 +4,7 @@
 
 	<groupId>fr.sparna.rdf</groupId>
 	<artifactId>rdf-toolkit</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.6.0</version>
 
 	<name>Sparna RDF : rdf-toolkit</name>
 	<description>Command-line utilities to manipulate RDF data</description>
@@ -170,7 +170,7 @@
 		<dependency>
 			<groupId>fr.sparna.rdf</groupId>
 			<artifactId>rdf4j-toolkit</artifactId>
-			<version>0.5-SNAPSHOT</version>
+			<version>0.6.0</version>
 		</dependency>
 
 		<!-- for command-line parsing -->

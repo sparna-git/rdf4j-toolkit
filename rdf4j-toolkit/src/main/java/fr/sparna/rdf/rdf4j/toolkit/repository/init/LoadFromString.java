@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.rio.RDFFormat;
-import org.eclipse.rdf4j.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +28,9 @@ public class LoadFromString extends AbstractLoadOperation implements Consumer<Re
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	
 	protected String data;
-	protected String rdfFormat;
+	protected RDFFormat rdfFormat;
 
-	public LoadFromString(String data, String rdfFormat) {
+	public LoadFromString(String data, RDFFormat rdfFormat) {
 		super();
 		this.data = data;
 		this.rdfFormat = rdfFormat;
@@ -53,8 +52,8 @@ public class LoadFromString extends AbstractLoadOperation implements Consumer<Re
 				RDFFormat.TRIX
 		}));
 		if(this.rdfFormat != null) {
-			log.debug("Will use this RDF format : "+this.rdfFormat);
-			formats.retainAll(Collections.singletonList(Rio.getParserFormatForFileName(this.rdfFormat).orElse(RDFFormat.RDFXML)));
+			log.debug("Will use this RDF format : "+this.rdfFormat.getName());
+			formats.retainAll(Collections.singletonList(this.rdfFormat));
 		} else {
 			log.debug("No RDF format specified. Will use all formats : "+formats);
 		}
