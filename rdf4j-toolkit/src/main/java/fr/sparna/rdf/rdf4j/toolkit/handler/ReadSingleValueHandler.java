@@ -7,6 +7,8 @@ import org.eclipse.rdf4j.query.AbstractTupleQueryResultHandler;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResultHandler;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reads a query result consisting of a single line with a single value (Literal or Resource).
@@ -15,6 +17,8 @@ import org.eclipse.rdf4j.query.TupleQueryResultHandlerException;
  */
 public class ReadSingleValueHandler extends AbstractTupleQueryResultHandler implements TupleQueryResultHandler {
 
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	
 	protected Value result = null;
 	protected String bindingName = null;
 	
@@ -41,6 +45,7 @@ public class ReadSingleValueHandler extends AbstractTupleQueryResultHandler impl
 			throw new TupleQueryResultHandlerException(this.getClass().getSimpleName()+" can only read query results with a single result.");
 		}
 		this.result = bs.getValue(this.bindingName);
+		log.trace("Read single value :\n"+this.result);
 	}
 
 	/**
