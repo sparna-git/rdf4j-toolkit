@@ -17,6 +17,7 @@ import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.rio.RDFFormat;
+import org.eclipse.rdf4j.rio.RDFParseException;
 import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class LoadFromUrl extends AbstractLoadOperation implements Consumer<Repos
 	protected Map<URL, String> urls;
 	// whether to automatically add the URL to the corresponding named graph
 	protected boolean autoNamedGraph;
-	// contentType to accept in the header - if null, Sesame provides a default behavior
+	// contentType to accept in the header - if null, RDF4J provides a default behavior
 	// typically some data are expecting precise content-type and fails if content-type is not one they know, like http://vocab.getty.edu/aat/300001280
 	protected RDFFormat acceptContentType = null;
 	
@@ -136,17 +137,30 @@ public class LoadFromUrl extends AbstractLoadOperation implements Consumer<Repos
 					}
 					
 					log.debug("Loading URL "+urlToLoad+"...");
-					connection.add(
-							urlToLoad,
-							this.defaultNamespace,
-							// NEVER EVER explicitly set the RDFFormat when loading from a URL.
-							// RDF4J can determine the appropriate parser based on the content type of the response if this parameter
-							// is left to null
-							// Rio.getParserFormatForFileName(aUrlEntry.getKey().toString(), RDFFormat.RDFXML),
-							// null,
-							this.acceptContentType,
-							(this.targetGraph != null)?connection.getValueFactory().createIRI(this.targetGraph.toString()):null
-					);
+					try {
+						connection.add(
+								urlToLoad,
+								this.defaultNamespace,
+								// NEVER EVER explicitly set the RDFFormat when loading from a URL.
+								// RDF4J can determine the appropriate parser based on the content type of the response if this parameter
+								// is left to null
+								// Rio.getParserFormatForFileName(aUrlEntry.getKey().toString(), RDFFormat.RDFXML),
+								// null,
+								this.acceptContentType,
+								(this.targetGraph != null)?connection.getValueFactory().createIRI(this.targetGraph.toString()):null
+						);
+					} catch (RDFParseException e1) {
+						RDFFormat theFormat = Rio.getParserFormatForFileName(urlToLoad.toString()).orElse(null);
+						if(theFormat != null) {
+							log.debug("Failed when relying on response headers, but can rely on file extension to determine format : "+theFormat.getName());
+							connection.add(
+									urlToLoad,
+									this.defaultNamespace,
+									theFormat,
+									(this.targetGraph != null)?connection.getValueFactory().createIRI(this.targetGraph.toString()):null
+							);	
+						}
+					} 
 					
 					if(cacheDir != null) {
 						try {
