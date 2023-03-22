@@ -1,6 +1,7 @@
 package fr.sparna.rdf.toolkit.select;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -117,42 +118,43 @@ public class Select implements ToolkitCommandIfc {
 
 			break;
 		} case CSV : {
-			// create output dir
-			File outputDir = args.getOutput();
-			if(!outputDir.exists()) {
-				outputDir.mkdirs();
-			}
 
-			// executer les SPARQL
-			List<File> sparqls = ListFilesRecursive.listFilesRecursive(args.getQueryDirectoryOrFile());
-
-			try(RepositoryConnection connection = inputRepository.getConnection()) {
-				for (final File file : sparqls) {
-					log.debug("Executing query in "+file.getAbsolutePath()+"...");
-					SimpleQueryReader reader = new SimpleQueryReader(file);
-					log.debug("Query is :\n"+reader.get());
-
-					SimpleSparqlOperation query = new SimpleSparqlOperation(reader);
-					if(bindings.size() > 0) {
-						query.setBindingSet(bindings);
+			if(args.getOutput().getName().endsWith("csv")) {
+				List<File> sparqls = ListFilesRecursive.listFilesRecursive(args.getQueryDirectoryOrFile());
+				if(sparqls.size() > 1) {
+					log.error("Cannot send output to CSV file for multiple queries");
+					System.exit(-1);
+				}
+				
+				try(RepositoryConnection connection = inputRepository.getConnection()) {
+					doExecuteCsv(
+							connection,
+							sparqls.get(0),
+							args.getOutput(),
+							bindings							
+					);
+				}
+				
+			} else {
+			
+				// create output dir
+				File outputDir = args.getOutput();
+				if(!outputDir.exists()) {
+					outputDir.mkdirs();
+				}
+	
+				// executer les SPARQL
+				List<File> sparqls = ListFilesRecursive.listFilesRecursive(args.getQueryDirectoryOrFile());
+	
+				try(RepositoryConnection connection = inputRepository.getConnection()) {
+					for (final File file : sparqls) {
+						doExecuteCsv(
+								connection,
+								file,
+								new File(outputDir, file.getName()+".csv"),
+								bindings							
+						);
 					}
-
-					// init writer
-					PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(outputDir, file.getName()+".csv"))));
-
-					try {
-						Perform.on(connection).select(
-								query,
-								new CsvHandler(writer, true, true)
-								);
-					} catch (Exception e) {
-						log.error("Error in query in "+file.getAbsolutePath()+"...");
-						e.printStackTrace();
-						// passer a la suivante
-					}
-
-					// finalize writer
-					writer.close();
 				}
 			}
 
@@ -165,6 +167,34 @@ public class Select implements ToolkitCommandIfc {
 		// shutdown repos
 		inputRepository.shutDown();
 
+	}
+	
+	private void doExecuteCsv(RepositoryConnection connection, File sparql, File outputFile, SPARQLQueryBindingSet bindings) throws FileNotFoundException {
+		log.debug("Executing query in "+sparql.getAbsolutePath()+"...");
+		SimpleQueryReader reader = new SimpleQueryReader(sparql);
+		log.debug("Query is :\n"+reader.get());
+
+		SimpleSparqlOperation query = new SimpleSparqlOperation(reader);
+		if(bindings.size() > 0) {
+			query.setBindingSet(bindings);
+		}
+
+		// init writer
+		PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
+
+		try {
+			Perform.on(connection).select(
+					query,
+					new CsvHandler(writer, true, true)
+					);
+		} catch (Exception e) {
+			log.error("Error in query in "+sparql.getAbsolutePath()+"...");
+			e.printStackTrace();
+			// passer a la suivante
+		}
+
+		// finalize writer
+		writer.close();
 	}
 
 }

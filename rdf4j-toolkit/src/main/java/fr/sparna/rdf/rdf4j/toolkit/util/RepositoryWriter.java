@@ -229,7 +229,8 @@ public class RepositoryWriter {
 		
 		if(this.namespacesMap != null) {
 			for (Map.Entry<String, String> anEntry : this.namespacesMap.entrySet()) {
-				writer.handleNamespace(anEntry.getKey(), anEntry.getValue());
+				// writer.handleNamespace(anEntry.getKey(), anEntry.getValue());
+				connection.setNamespace(anEntry.getKey(), anEntry.getValue());
 			}
 		}
 

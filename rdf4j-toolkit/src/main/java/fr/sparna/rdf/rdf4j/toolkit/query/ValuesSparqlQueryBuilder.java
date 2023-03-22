@@ -57,7 +57,7 @@ public class ValuesSparqlQueryBuilder implements Supplier<String> {
 	
 	public static void main(String...strings) throws Exception {
 		Repository r = new SailRepository(new MemoryStore());
-		r.initialize();
+		r.init();
 		System.out.println(r.getValueFactory().createLiteral("toto", "fr").toString());
 		System.out.println(r.getValueFactory().createIRI("abc:def"));
 		System.out.println(r.getValueFactory().createIRI("abc:def").stringValue());

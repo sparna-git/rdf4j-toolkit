@@ -265,7 +265,7 @@ public class LoadFromUrl extends AbstractLoadOperation implements Consumer<Repos
 //		System.out.println(s);
 //		
 		Repository r = new SailRepository(new MemoryStore());
-		r.initialize();
+		r.init();
 //		r.getConnection().add(
 //				new URL("http://fr.dbpedia.org/data/Aérodrome.n3"),
 //				null,

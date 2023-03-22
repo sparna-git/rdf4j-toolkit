@@ -3,7 +3,7 @@ package fr.sparna.rdf.toolkit.select;
 import java.io.PrintWriter;
 import java.util.List;
 
-import org.eclipse.rdf4j.model.URI;
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResultHandler;
 import org.eclipse.rdf4j.query.TupleQueryResultHandlerBase;
@@ -105,7 +105,7 @@ public class SimpleHTMLReportHandler extends TupleQueryResultHandlerBase impleme
 		writer.println("\t<tr>");
 		for (String aBindingName : this.bindingNames) {
 			if(bs.getValue(aBindingName) != null) {
-				if(bs.getValue(aBindingName) instanceof URI) {
+				if(bs.getValue(aBindingName) instanceof IRI) {
 					writer.println("\t<td><a href=\""+bs.getValue(aBindingName).stringValue()+"\">"+bs.getValue(aBindingName).stringValue()+"</a></td>");
 				} else {
 					writer.println("\t<td>"+bs.getValue(aBindingName).stringValue()+"</td>");

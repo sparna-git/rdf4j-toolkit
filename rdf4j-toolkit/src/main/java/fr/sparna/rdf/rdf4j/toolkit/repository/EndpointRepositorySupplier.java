@@ -29,7 +29,7 @@ public class EndpointRepositorySupplier implements Supplier<Repository> {
 	@Override
 	public Repository get() {		
 		Repository repository = (this.isRdf4j)?new HTTPRepository(this.endpoint):new SPARQLRepository(this.endpoint);
-		repository.initialize();		
+		repository.init();		
 		return repository;
 	}
 	

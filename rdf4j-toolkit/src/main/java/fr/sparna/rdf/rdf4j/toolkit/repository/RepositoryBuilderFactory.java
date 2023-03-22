@@ -34,6 +34,8 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	
 	protected Supplier<Repository> localRepositorySupplier; 
 	
+	protected String namedGraphsRootUri = null;
+	
 	/**
 	 * Creates a RepositoryBuilderFactory with a list of Strings that can be file path, directory paths, or URLs, and the
 	 * original {@code Supplier<Repository>}.
@@ -45,6 +47,13 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 		super();
 		this.fileOrDirectoryOrURLs = fileOrDirectoryOrURLs;
 		this.localRepositorySupplier = localRepositoryFactory;
+	}
+	
+	public RepositoryBuilderFactory(List<String> fileOrDirectoryOrURLs, Supplier<Repository> localRepositoryFactory, String namedGraphsRootUris) {
+		super();
+		this.fileOrDirectoryOrURLs = fileOrDirectoryOrURLs;
+		this.localRepositorySupplier = localRepositoryFactory;
+		this.namedGraphsRootUri = namedGraphsRootUris;
 	}
 	
 	public static RepositoryBuilder fromSystemProperty() {
@@ -74,6 +83,10 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 	 */
 	public static RepositoryBuilder fromStringList(List<String> fileOrDirectoryOrURLs) {
 		return new RepositoryBuilderFactory(fileOrDirectoryOrURLs, new LocalMemoryRepositorySupplier()).get();
+	}
+	
+	public static RepositoryBuilder fromStringList(List<String> fileOrDirectoryOrURLs, String namedGraphsRootUri) {
+		return new RepositoryBuilderFactory(fileOrDirectoryOrURLs, new LocalMemoryRepositorySupplier(), namedGraphsRootUri).get();
 	}
 	
 	/**
@@ -151,7 +164,12 @@ public class RepositoryBuilderFactory implements Supplier<RepositoryBuilder> {
 				repositorySupplier = new VirtuosoReflectionRepositoryFactory(value);				
 			} else {
 				log.debug(value+" will try to be loaded from a file, directory or classpath resource");
-				operations.add(new LoadFromFileOrDirectory(this.fileOrDirectoryOrURLs));
+				LoadFromFileOrDirectory lffod = new LoadFromFileOrDirectory(this.fileOrDirectoryOrURLs);
+				if(this.namedGraphsRootUri != null) {
+					lffod.setAutoNamedGraphs(true);
+					lffod.setNamedGraphsRootUri(this.namedGraphsRootUri);
+				}
+				operations.add(lffod);
 			}
 
 		} else {

@@ -63,7 +63,7 @@ public class LocalMemoryRepositorySupplier implements Supplier<Repository> {
 		}
 		}
 		
-		repository.initialize();
+		repository.init();
 		
 		return repository;	
 	}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
@@ -31,6 +32,8 @@ public class LoadFromFileOrDirectory extends AbstractLoadOperation {
 	private List<String> rdfFiles;
 	
 	private boolean autoNamedGraphs = false;
+	
+	private String namedGraphsRootUri = null;
 	
 	private int numberOfProcessedFiles = 0;
 	
@@ -109,14 +112,8 @@ public class LoadFromFileOrDirectory extends AbstractLoadOperation {
 	 * @throws RepositoryException
 	 * @throws IOException
 	 */
-	private void loadFileOrDirectory(File aFileOrDirectory, RepositoryConnection connection, URI context)
-	throws RDFParseException, RepositoryException, IOException {
-		IRI graph = (autoNamedGraphs)?
-				connection.getValueFactory().createIRI(context.toString())
-				:((this.targetGraph != null)?connection.getValueFactory().createIRI(this.targetGraph.toString()):null);
-				
-		log.debug("Processing file "+aFileOrDirectory.getAbsolutePath()+" into graph "+graph+"...");
-		
+	private void loadFileOrDirectory(File aFileOrDirectory, RepositoryConnection connection, URI defaultContext)
+	throws RDFParseException, RepositoryException, IOException {		
 		// don't process hidden files or directories
 		if(aFileOrDirectory.isHidden()) {
 			log.debug("Hidden file or directory - will not be processed.");
@@ -126,22 +123,39 @@ public class LoadFromFileOrDirectory extends AbstractLoadOperation {
 		if(aFileOrDirectory.isDirectory()) {
 			for (File f : aFileOrDirectory.listFiles()) {
 				try {
-					loadFileOrDirectory(f, connection, context);
+					loadFileOrDirectory(f, connection, defaultContext);
 				} catch (Exception e) {
 					// on attrape l'exception et on passe au suivant
 					e.printStackTrace();
 				}
 			}
 		} else {
+			
+			IRI graph = null;
+			if(this.targetGraph != null) {
+				graph = this.targetGraph;
+			} else if(autoNamedGraphs) {
+				if(this.namedGraphsRootUri != null) {
+					String id = aFileOrDirectory.getAbsolutePath().substring(
+							aFileOrDirectory.getAbsolutePath().lastIndexOf("/")+1,
+							aFileOrDirectory.getAbsolutePath().lastIndexOf(".")
+					);
+					String graphUri = this.namedGraphsRootUri+id;
+					graph = connection.getValueFactory().createIRI(graphUri);
+				} else {
+					graph = connection.getValueFactory().createIRI(defaultContext.toString());
+				}
+			}
+			
+			log.debug("Processing file "+aFileOrDirectory.getAbsolutePath()+" into graph "+graph+"...");
+			
 			try {
 				connection.add(
 						aFileOrDirectory,
 						// TODO : mettre le namespace par defaut comme un parametre ?
 						RDF.NAMESPACE,
 						Rio.getParserFormatForFileName(aFileOrDirectory.getName()).orElse(RDFFormat.RDFXML),
-						(autoNamedGraphs)?
-								connection.getValueFactory().createIRI(context.toString())
-								:((this.targetGraph != null)?connection.getValueFactory().createIRI(this.targetGraph.toString()):null)
+						graph
 				);
 				numberOfProcessedFiles++;
 			} catch (Exception e) {
@@ -180,6 +194,21 @@ public class LoadFromFileOrDirectory extends AbstractLoadOperation {
 	 */
 	public void setAutoNamedGraphs(boolean namedGraphAware) {
 		this.autoNamedGraphs = namedGraphAware;
+	}
+	
+	public String getNamedGraphsRootUri() {
+		return namedGraphsRootUri;
+	}
+
+	/**
+	 * Sets the root URI to use for named graphs, in case autoNamedGraphs is true. By default, the file URI
+	 * is used for named graphs. When this option is set, the root URI is used as the base URI, with the filename
+	 * without extension as the path.
+	 * 
+	 * @param namedGraphsRootUri
+	 */
+	public void setNamedGraphsRootUri(String namedGraphsRootUri) {
+		this.namedGraphsRootUri = namedGraphsRootUri;
 	}
 
 }

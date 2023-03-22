@@ -38,6 +38,13 @@ public class ArgumentsSerialize {
 	) 
 	private boolean noOrder = false;
 	
+	@Parameter(
+			names = { "-ng", "--named-graphs" },
+			description = "Named graph root URI to append to filename without extension to load each individual file in a separate named graph",
+			required = false
+	) 
+	private String namedGraphRootUri;
+	
 	public Map<String, String> getNamespaceMappings() {
 		if(this.namespaceMappingsStrings == null) {
 			return null;
@@ -48,6 +55,7 @@ public class ArgumentsSerialize {
 		}
 		return result;
 	}
+	
 	
 	public List<String> getInput() {
 		return input;
@@ -79,6 +87,14 @@ public class ArgumentsSerialize {
 
 	public void setNoOrder(boolean noOrder) {
 		this.noOrder = noOrder;
+	}
+
+	public String getNamedGraphRootUri() {
+		return namedGraphRootUri;
+	}
+
+	public void setNamedGraphRootUri(String namedGraphRootUri) {
+		this.namedGraphRootUri = namedGraphRootUri;
 	}
 
 }

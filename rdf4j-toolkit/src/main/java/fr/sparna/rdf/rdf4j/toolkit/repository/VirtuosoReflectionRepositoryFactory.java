@@ -65,7 +65,7 @@ public class VirtuosoReflectionRepositoryFactory implements Supplier<Repository>
 			Class virtuosoRepositoryClass = Class.forName("virtuoso.rdf4j.driver.VirtuosoRepository");
 			Constructor virtuosoRepositoryClassConstructor = virtuosoRepositoryClass.getConstructor(String.class, String.class, String.class);
 			Repository repository = (Repository)virtuosoRepositoryClassConstructor.newInstance(this.jdbcURL, this.login, this.password);
-			repository.initialize();
+			repository.init();
 			return repository;
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
