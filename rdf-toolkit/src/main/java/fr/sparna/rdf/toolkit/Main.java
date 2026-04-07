@@ -10,6 +10,8 @@ import com.beust.jcommander.ParameterException;
 import fr.sparna.cli.URIFactory;
 import fr.sparna.rdf.toolkit.construct.ArgumentsConstruct;
 import fr.sparna.rdf.toolkit.construct.Construct;
+import fr.sparna.rdf.toolkit.frame.ArgumentsFrame;
+import fr.sparna.rdf.toolkit.frame.Frame;
 import fr.sparna.rdf.toolkit.select.ArgumentsSelect;
 import fr.sparna.rdf.toolkit.select.Select;
 import fr.sparna.rdf.toolkit.serialize.ArgumentsSerialize;
@@ -25,6 +27,7 @@ public class Main {
 		SELECT(new ArgumentsSelect(), new Select()),
 		SERIALIZE(new ArgumentsSerialize(), new Serialize()),
 		UPDATE(new ArgumentsUpdate(), new Update()),	
+		FRAME(new ArgumentsFrame(), new Frame())
 		;
 		
 		private ToolkitCommandIfc command;

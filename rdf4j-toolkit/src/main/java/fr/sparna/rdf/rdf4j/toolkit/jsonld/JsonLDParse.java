@@ -2,8 +2,6 @@ package fr.sparna.rdf.rdf4j.toolkit.jsonld;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.Map;
 
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.repository.Repository;
@@ -11,7 +9,6 @@ import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
-import org.eclipse.rdf4j.rio.jsonld.JSONLDWriterFactory;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
 
 import com.github.jsonldjava.core.DocumentLoader;
